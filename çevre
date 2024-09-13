@@ -1,0 +1,33 @@
+import discord
+
+
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'şu kişi olarak giriş yaptık {self.user} (ID: {self.user.id})')
+        print('------')
+
+    async def on_message(self, message):
+        if message.author.id == self.user.id:
+            return
+
+        if message.content.startswith('$çevre'):
+            await message.reply('Çevre konusunda bilgi edinin.', mention_author=True)
+        elif message.content.startswith('$atık'):
+            await message.reply('Atıklarınızı ayrıştırın, geri dönüşüme katkı sağlayın', mention_author=True)
+        elif message.content.startswith('$naylon'):
+            await message.reply('Naylon poşet kullanımını azaltın. ...', mention_author=True)
+        elif message.content.startswith('$su'):
+            await message.reply('Dişinizi fırçalarken, banyo yaparken ve mutfakta çeşmeyi açık bırakmayın', mention_author=True)
+        elif message.content.startswith('$elektrik'):
+            await message.reply('Enerji tasarruflu ampuller kullanın.', mention_author=True)
+        else:
+            await message.channel.send(message.content)
+
+
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = MyClient(intents=intents)
+client.run('tokeni buraya girin')
